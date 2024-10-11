@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  django:
+    build: 
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: "mydatabase"
+      DB_USER: "myuser"
+      DB_PASSWORD: "mypassword"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+  
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    build: 
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

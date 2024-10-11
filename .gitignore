@@ -1,0 +1,6 @@
+venv
+files
+db.sqlite3
+.idea
+__pycache__
+.vscode
